@@ -1,0 +1,538 @@
+Structural()
+
+#
+##
+### Minimal medium
+##
+#
+#
+
+#########    C SOURCE
+
+GLC_mm_tx:
+    x_GLC -> "GLC"
+    ~
+
+########    CORE SUBSTRATES    
+
+Pi_mm_tx:
+    x_Pi -> "Pi"
+    ~
+
+SO4_mm_tx: 
+    x_SULFATE -> "SULFATE"
+    ~
+
+H2O_mm_tx:
+    x_WATER <> "WATER"
+    ~  
+
+O2_mm_tx:
+    x_O2 <> "OXYGEN-MOLECULE"
+    ~
+
+NH4_mm_tx: # SOLE N SOURCE IF NO3 tx blocked!
+    x_NH4 <> "AMMONIUM"
+    ~
+
+##"FE+2_mm_tx": # needed for protoheme/siroheme synthesis.
+##              # Involved in other reacs too.
+##    "x_FE+2" -> "FE+2"
+##    ~
+
+########        VITAMINS
+
+NIACINE_mm_tx: # needed to produce NAD,NADH,NADP,NADPH without O2 and NO3!!!
+    # auxotrophy exp N315 Becker 2005, comp in all 64 strains Bosi 2016
+    x_NIACINE -> "NIACINE" 
+    ~
+
+#####       E ACCEPTORS
+
+NO3_mm_tx: # ETC
+    x_NITRATE -> "NITRATE" 
+    ~
+
+NO2_mm_tx:  # ETC # Can be imported, but stronger pref of EC for NO3 in ETC (REF)
+    x_NITRITE <- "NITRITE"
+    ~
+
+#####      METABOLIC BY-PRODUCTS (excreted to the environment)
+
+CO2_bp_tx: # Not IRREV, bact can not fix it
+    x_CO2 <- "CARBON-DIOXIDE"
+    ~
+
+"D-LACTATE_bp_tx":
+    "x_D-LACTATE" + x_PROTON <- "D-LACTATE" + "PROTON"
+    ~
+
+"L-LACTATE_bp_tx":
+    "x_L-LACTATE" + x_PROTON <- "L-LACTATE" + "PROTON"
+    ~
+
+SUC_bp_tx: # mixed acid fermentation
+    x_SUC + 2 x_PROTON <- "SUC" + 2 "PROTON"
+    ~
+
+ACET_bp_tx: 
+    x_ACET + x_PROTON <- "ACET" + "PROTON"
+    ~
+
+FORMATE_bp_tx: # mixed acid fermentation = CO2 + H2 * Check!!
+    x_FORMATE + x_PROTON <- "FORMATE" + "PROTON"
+    ~
+    
+ETOH_bp_tx: # mixed acid fermentation and pyruvate to ethanol
+    x_ETOH <- "ETOH"
+    ~
+
+"2-KETOGLUTARATE_bp_tx": # mixed acid fermentation
+    "x_2-KETOGLUTARATE" + 2 x_PROTON <- "2-KETOGLUTARATE" + 2 "PROTON"
+    ~
+
+ACETOIN_bp_tx: # fermentation: pyruvate to acetoin
+    x_ACETOIN <- "ACETOIN"
+    ~
+
+BUTYRIC_ACID_bp_tx: # fermentation: pyruvate to butanoate
+    x_BUTYRIC_ACID + 1 x_PROTON <- "BUTYRIC_ACID" + "PROTON"
+    ~
+
+BUTANOL_bp_tx: # fermentation: glycerol to butanol (PWY-7003)
+    x_BUTANOL  <- "BUTANOL"
+    ~
+
+BUTANEDIOL_bp_tx: # fermentation: glycerol to butanediol
+    x_BUTANEDIOL  <- "BUTANEDIOL"
+    ~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

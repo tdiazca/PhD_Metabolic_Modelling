@@ -1,0 +1,678 @@
+Structural()
+#
+##
+### # There is no NITRATE or GLN in MMc media. Added here for completeness.
+##  # BUT remember to block these tx in all analysis accordingly!!!
+#   # (NO3_mm_tx ; GLN_AA_mm_tx)
+
+
+######## Amino acids
+
+ALA_AA_mm_tx: 
+    x_ALA -> "L-ALPHA-ALANINE" 
+    ~
+
+ARG_AA_mm_tx:
+    x_ARG -> "ARG"
+    ~
+
+ASN_AA_mm_tx:
+    x_ASN -> "ASN"
+    ~
+
+ASP_AA_mm_tx:
+    "x_L-ASPARTATE" -> "L-ASPARTATE"
+    ~
+
+CYS_AA_mm_tx:
+    x_CYS -> "CYS"
+    ~
+
+GLT_AA_mm_tx:
+    x_GLT-> "GLT"
+    ~
+
+GLN_AA_mm_tx: # Not in MM medium! Block in analysis, left in for completeness.
+    x_GLN-> "GLN"
+    ~
+
+GLY_AA_mm_tx:
+    x_GLY -> "GLY"
+    ~
+
+HIS_AA_mm_tx:
+    x_HIS -> "HIS"
+    ~
+
+ILE_AA_mm_tx:
+    x_ILE -> "ILE"
+    ~
+
+LEU_AA_mm_tx:
+    x_LEU -> "LEU"
+    ~
+
+LYS_AA_mm_tx:
+    x_LYS -> "LYS"
+    ~
+
+MET_AA_mm_tx:
+    x_MET -> "MET"
+    ~
+
+PHE_AA_mm_tx:
+    x_PHE -> "PHE"
+    ~
+
+PRO_AA_mm_tx:
+    x_PRO -> "PRO"
+    ~
+
+SER_AA_mm_tx:
+    x_SER -> "SER"
+    ~
+
+TRP_AA_mm_tx:
+    x_TRP -> "TRP"
+    ~
+
+TYR_AA_mm_tx:
+    x_TYR -> "TYR"
+    ~
+
+THR_AA_mm_tx:
+    x_THR -> "THR"
+    ~
+
+VAL_AA_mm_tx:
+    x_VAL -> "VAL"
+    ~
+
+#########    C SOURCE
+
+GLC_mm_tx:
+    x_GLC -> "GLC"
+    ~
+
+########    CORE SUBSTRATES    
+
+H2O_mm_tx:
+    x_WATER <> "WATER"
+    ~
+
+NH4_mm_tx:  
+    x_NH4 <> "AMMONIUM"
+    ~
+
+O2_mm_tx:
+    x_O2 <> "OXYGEN-MOLECULE"
+    ~
+
+Pi_mm_tx: 
+    x_Pi -> "Pi"
+    ~
+
+SO4_mm_tx: 
+    x_SULFATE -> "SULFATE"
+    ~
+    
+##"FE+2_mm_tx": 
+##    "x_FE+2" -> "FE+2"
+##    ~
+## Needed for protoheme/siroheme synthesis.
+## But these are not in BM description file.
+
+########        VITAMINS
+
+NIACINE_mm_tx: # needed to produce NAD,NADH,NADP,NADPH without O2 and NO3!!!
+    x_NIACINE -> "NIACINE" 
+    ~
+## Auxotrophy exp N315 Becker 2005, comp in all 64 strains Bosi 2016
+
+#######         ALTERNATIVE ELECTRON ACCEPTORS
+
+##NO3_mm_tx: # Not in Mm medium. Only add for compelteness if required.
+##    x_NITRATE -> "NITRATE" 
+##    ~
+
+NO2_mm_tx:  # ETC # Can be imported, but stronger pref of EC for NO3 in ETC (REF)
+    x_NITRITE <- "NITRITE"
+    ~
+
+#######      METABOLIC BY-PRODUCTS; EXCRETED TO THE ENVIRONMENT
+
+ACET_bp_tx: # CH3COOH vs CH3COO- (acetic acid is protonated form of acetate)
+    x_ACET + x_PROTON <- "ACET" + "PROTON"
+    ~
+    # CH3COOH vs CH3COO- (acetic acid is protonated form of acetate)
+    # In MetaCyc CH3COO- formula (acetate)
+    # we assume when its exported it is exported as the acid
+    # part of the acid will be present as conjugated base (acetate)
+    # ratio depends on dissociation constant under physiological conditions
+
+ACETOIN_bp_tx: # fermentation: pyruvate to acetoin
+    x_ACETOIN <- "ACETOIN"
+    ~
+
+BUTYRIC_ACID_bp_tx: # fermentation: pyruvate to butanoate
+    x_BUTYRIC_ACID + 1 x_PROTON <- "BUTYRIC_ACID" + "PROTON"
+    ~
+
+BUTANOL_bp_tx: # fermentation: glycerol to butanol (PWY-7003)
+    x_BUTANOL  <- "BUTANOL"
+    ~
+
+BUTANEDIOL_bp_tx: # fermentation: glycerol to butanediol
+    x_BUTANEDIOL  <- "BUTANEDIOL"
+    ~
+
+CO2_bp_tx: # Not IRREV, bact can not fix it
+    x_CO2 <- "CARBON-DIOXIDE"
+    ~
+
+ETOH_bp_tx: # mixed acid fermentation and pyruvate to ethanol
+    x_ETOH <- "ETOH"
+    ~
+
+FORMATE_bp_tx: # mixed acid fermentation = CO2 + H2 * Check!!
+    x_FORMATE + x_PROTON <- "FORMATE" + "PROTON"
+    ~
+
+"D-LACTATE_bp_tx":
+    "x_D-LACTATE" + x_PROTON <- "D-LACTATE" + "PROTON"
+    ~
+
+"L-LACTATE_bp_tx":
+    "x_L-LACTATE" + x_PROTON <- "L-LACTATE" + "PROTON"
+    ~
+
+SUC_bp_tx: # mixed acid fermentation
+    x_SUC + 2 x_PROTON <- "SUC" + 2 "PROTON"
+    ~
+
+"2-KETOGLUTARATE_bp_tx": # mixed acid fermentation
+    "x_2-KETOGLUTARATE" + 2 x_PROTON <- "2-KETOGLUTARATE" + 2 "PROTON"
+    ~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

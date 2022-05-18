@@ -1,0 +1,550 @@
+Structural()
+#
+##
+### 
+##
+#
+
+## Synovial fluid
+
+## Individual free amino acids in human blood plasma26,27: aspartic acid, asparagine, glutamic acid, glutamine,
+## glycine, alanine, aminobutyric acid, valine, leucine, isoleucine, serine, threonine, cysteine, methionine,
+## taurine, proline, phenylalanine, tyrosine, tryptophan, histidine, ornithine, lysine, arginine, citrulline.
+
+## In SUMMARY: make in vitro synovial fluid with main metabolizable compounds in synovial fluid in vivo: glucose,
+## amino acids, HA (D-glucuronic acid, and D-N-acetylglucosamine), urea, uric acid, chondroitin sulphate.
+
+## "4-AMINO-BUTYRATE_AA_mm_tx": #aminobutyric acid: 4-amino-butanoate involved with ARG, GLU, ORNITHINE degradation;
+##    links to butanoate metabolism
+
+## NH4_mm_tx:  ## REF1: normal range 11 to 32 micromol/l in blood (NH3) = 0.011 to 0.032 mmol per l
+                        # the significance of a high plasma ammonia value, Arch Dis Child 2004
+               ## REF2: lower than 50 micromol/l infants to 16 yr
+                        # (pathology harmony group, clinical biochemistry outcomes, Jan 2011)
+               ## since AA are presnet, it will likely be excreted.
+
+## IMPORTANT:
+
+    ## In plasma, in vitro, NO2 has a short half-life because it is oxidized to NO3.
+    ## It is not yet clear what enzymatic or chemical process is involved in this oxidation reaction.
+        ## REF:Inorganic nitrate and nitrite and control of blood pressure. https://doi.org/10.1093/cvr/cvq309
+    ## NO3/NO2 in blood: 0.0764 mmol/L in men ; 0.0656 mmol/L woman. REF: Ghasemi 2010.
+    ## O2 in blood: 24 mmol. REFS(x3): Shaphiro; Malatesha; Chu YC.
+    ## Free AA concentrations in plasma (REF: Canepa et al.2002): in children,
+        ## ranges from 411 micromol/L GLN to 1.8 micromol/L ASP
+            
+    ## units of flux mmol/gDW/h not directly comaprable to mmol/L in blood.
+        ## we don't know vol of synovial fluid im joint and ammount bff in joint.
+
+## Orphan metabolistes (commented):
+    # "TAURINE","CPD-15332","CPD-12557","CPD-12521"
+        # "CPD-15332" - uric acid / urate - 'URATE' in model. In orphans.
+        # "CPD-12557" - &beta;-GalNAc ; 'CPD-3604' - &alpha;-GalNAc - 'N-acetyl-D-galactosamine'
+        # 'CPD-12521' - beta-D-glucuronate; 'CPD-14488' - alpha-D-glucuronate
+
+######## Amino acids
+
+CITRULLINE_mm_tx: ## SYNOVIAL FL only; considered an AA
+    x_CITRULLINE -> "L-CITRULLINE"
+    ~
+
+ORNIT_mm_tx: ## SYNOVIAL FL only; considered an AA
+    x_ORNIT -> "L-ORNITHINE"
+    ~
+
+##TAU_mm_tx:  ## SYNOVIAL FL only; considered an AA
+##    x_TAURINE -> "TAURINE"  ## is orphan
+##    ~
+##
+##    # no reacs CONSUMING it on db (BioCyc vs 22.6)
+
+"4-AMINO-BUTYRATE_mm_tx": ## SYNOVIAL FL only; (GABA); considered an AA
+    "x_4-AMINO-BUTYRATE" -> "4-AMINO-BUTYRATE"
+    ~
+
+ALA_AA_mm_tx: 
+    x_ALA -> "L-ALPHA-ALANINE" 
+    ~
+
+ARG_AA_mm_tx:
+    x_ARG -> "ARG"
+    ~
+
+ASN_AA_mm_tx:
+    x_ASN -> "ASN"
+    ~
+
+ASP_AA_mm_tx:
+    "x_L-ASPARTATE" -> "L-ASPARTATE"
+    ~
+
+CYS_AA_mm_tx:
+    x_CYS -> "CYS"
+    ~
+
+GLT_AA_mm_tx:
+    x_GLT-> "GLT"
+    ~
+
+GLN_AA_mm_tx:
+    x_GLN-> "GLN"
+    ~
+
+GLY_AA_mm_tx:
+    x_GLY -> "GLY"
+    ~
+
+HIS_AA_mm_tx:
+    x_HIS -> "HIS"
+    ~
+
+ILE_AA_mm_tx:
+    x_ILE -> "ILE"
+    ~
+
+LEU_AA_mm_tx:
+    x_LEU -> "LEU"
+    ~
+
+LYS_AA_mm_tx:
+    x_LYS -> "LYS"
+    ~
+
+MET_AA_mm_tx:
+    x_MET -> "MET"
+    ~
+
+PHE_AA_mm_tx:
+    x_PHE -> "PHE"
+    ~
+
+PRO_AA_mm_tx:
+    x_PRO -> "PRO"
+    ~
+
+SER_AA_mm_tx:
+    x_SER -> "SER"
+    ~
+
+TRP_AA_mm_tx:
+    x_TRP -> "TRP"
+    ~
+
+TYR_AA_mm_tx:
+    x_TYR -> "TYR"
+    ~
+
+THR_AA_mm_tx:
+    x_THR -> "THR"
+    ~
+
+VAL_AA_mm_tx:
+    x_VAL -> "VAL"
+    ~
+
+############################ GLYCOSAMINOGLYCANS
+
+    ## Mostly HA, only 2 per cent is chondroitin sulphate
+
+####### HYALURONIC ACID: (D-glucuronic acid and D-N-acetylglucosamine)
+
+##Hyaluronate_mm_tx: ## SYNOVIAL FL only # HA; 
+##    x_Hyaluronate -> "HYALURONATE" ## is orphan!!!
+##    ~
+##    # Vir factor Staph aureus: EC-4.2.2.1 ; gene hyaluronate lyase: hysA
+##    # Not described in Sepi RP62A, not found on my lab strain
+##
+####Glucuronate_mm_tx: ## SYNOVIAL FL only # HA;
+####    x_Glucuronate -> "CPD-12521" ## is orphan!!!
+####    ~
+####    # No specific reference to glucuronate being effectively used by Staph.
+####    # No increased growth on Staph if supplemented (Oya 1960)
+####    # No specific reacs CONSUMING them on db (BioCyc vs 22.6):
+####    # 'CPD-14488' - alpha-D-glucuronate ; 'CPD-12521' - beta-D-glucuronate
+####    # 'CPD-15530' - aldehydo-D-glucuronate
+####
+####GlcNac_mm_tx: ## SYNOVIAL FL only # HA
+####    x_GlcNac -> "N-ACETYL-D-GLUCOSAMINE"
+####    ~
+
+####### CHONDROITIN SULPHATE (N-acetyl-beta-D-galactosamine and beta-D-glucuronate)
+            # both comps can be sulfated (see chondroitin sulphate A,C,D and E)
+
+##GalNac_mm_tx: ## SYNOVIAL FL only # N-acetyl-beta-D-galactosamine ## is orphan!!!
+##    x_GalNac -> "CPD-12557"
+##    ~
+##
+##    # N-acetyl-D-galactosamine - only rxs in MetaCyc (22.6) that CONSUME it =
+##        # dbs['N-acetyl-D-galactosamine'].Instances = CPD-12557 (beta), CPD-3604 (alpha)
+##        # consuming it: RXN-13547; (produces 'N-ACETYL-D-GALACTOSAMINE-6-PHOSPHATE') ; not in model or db
+##        # consuming it: 2.7.1.157-RXN (produces CPD-7246 (...-1-P) ; not in model or db         
+##
+####Glucuronate_mm_tx: ## SYNOVIAL FL only # HA 
+####    x_Glucuronate -> "CPD-12521"  ## is orphan!!!
+####    ~
+
+#######
+
+"UREA_mm_tx": ## SYNOVIAL FL only
+    "x_UREA" -> "UREA"
+    ~
+
+##"Urate_mm_tx": ## Uric acid - SYNOVIAL FL only
+##    "x_Urate" -> "URATE" ## is orphan!!!
+##    ~
+##
+##    # "URATE" - no reacs CONSUMING it on db (BioCyc vs 22.6)
+##    # "CPD-15332" - uric acid (no reacs in MetaCyc)
+
+#########    GLUCOSE
+
+GLC_mm_tx:
+    x_GLC -> "GLC"
+    ~
+
+########    'CORE' SUBSTRATES    
+
+H2O_mm_tx:
+    x_WATER <> "WATER"
+    ~
+
+NH4_mm_tx:  ## since AA oresnet, will likely be excreted
+    x_NH4 <> "AMMONIUM"
+    ~
+
+O2_mm_tx:
+    x_O2 <> "OXYGEN-MOLECULE"
+    ~
+
+Pi_mm_tx: 
+    x_Pi -> "Pi"
+    ~
+
+SO4_mm_tx: 
+    x_SULFATE -> "SULFATE"
+    ~
+    
+##"FE+2_mm_tx": 
+##    "x_FE+2" -> "FE+2"
+##    ~
+## Needed for protoheme/siroheme synthesis.
+## But these are not in BM description file.
+
+
+########        VITAMINS
+
+NIACINE_mm_tx: # needed to produce NAD,NADH,NADP,NADPH without O2 and NO3!!!
+    x_NIACINE -> "NIACINE" 
+    ~
+## Auxotrophy exp N315 Becker 2005, comp in all 64 strains Bosi 2016
+
+#######         ALTERNATIVE ELECTRON ACCEPTORS
+
+NO3_mm_tx: # 4 to 6 microgram/ml in blood: REF an evaluation of blood nitrate levels 1958
+    x_NITRATE -> "NITRATE" 
+    ~
+
+NO2_mm_tx: # short half life in plasma; gets oxidized to NO3
+    x_NITRITE <- "NITRITE"
+    ~
+
+#######      METABOLIC BY-PRODUCTS; EXCRETED TO THE ENVIRONMENT
+
+ACET_bp_tx: #
+    x_ACET + x_PROTON <- "ACET" + "PROTON"
+    ~
+
+ACETOIN_bp_tx: # fermentation: pyruvate to acetoin
+    x_ACETOIN <- "ACETOIN"
+    ~
+
+BUTYRIC_ACID_bp_tx: # fermentation: pyruvate to butanoate
+    x_BUTYRIC_ACID + 1 x_PROTON <- "BUTYRIC_ACID" + "PROTON"
+    ~
+
+BUTANOL_bp_tx: # fermentation: glycerol to butanol (PWY-7003)
+    x_BUTANOL  <- "BUTANOL"
+    ~
+
+BUTANEDIOL_bp_tx: # fermentation: glycerol to butanediol
+    x_BUTANEDIOL  <- "BUTANEDIOL"
+    ~
+
+CO2_bp_tx: # Not IRREV, bact can not fix it
+    x_CO2 <- "CARBON-DIOXIDE"
+    ~
+
+ETOH_bp_tx: # mixed acid fermentation and pyruvate to ethanol
+    x_ETOH <- "ETOH"
+    ~
+
+FORMATE_bp_tx: # mixed acid fermentation = CO2 + H2 * Check!!
+    x_FORMATE + x_PROTON <- "FORMATE" + "PROTON"
+    ~
+
+"D-LACTATE_bp_tx":
+    "x_D-LACTATE" + x_PROTON <- "D-LACTATE" + "PROTON"
+    ~
+
+"L-LACTATE_bp_tx":
+    "x_L-LACTATE" + x_PROTON <- "L-LACTATE" + "PROTON"
+    ~
+
+SUC_bp_tx: # mixed acid fermentation
+    x_SUC + 2 x_PROTON <- "SUC" + 2 "PROTON"
+    ~
+
+"2-KETOGLUTARATE_bp_tx": # mixed acid fermentation
+    "x_2-KETOGLUTARATE" + 2 x_PROTON <- "2-KETOGLUTARATE" + 2 "PROTON"
+    ~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

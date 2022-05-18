@@ -1,0 +1,891 @@
+     Structural()
+
+############ CELL MEMBRANE SYNTHESIS
+
+"Palmitate_synth": # I added a water mol on L side to balance
+    8 "ACETYL-COA" + 14 "NADPH" + 7 "ATP" + 6 "PROTON" + 1 "WATER" <> 1 "PALMITATE"
+    + 14 "NADP" + 8 "CO-A" + 7 "ADP" + 7 "Pi"
+    ~
+
+"PA_synth_NADPH": # Phosphatidic acid (from Sisse's UTI89 model) # NAD(P)H??????
+    "DIHYDROXY-ACETONE-PHOSPHATE" + "NADPH" + 2 "PALMITATE" <> "L-PHOSPHATIDATE" + "NADP" 
+    ~
+
+"DIACYLGLYKIN-RXN": # EC 2.7.1.107, in Biocyc  
+    "ATP" + "DIACYLGLYCEROL" <> "PROTON" + "L-PHOSPHATIDATE" + "ADP"
+    ~
+    #LEFT-TO-RIGHT
+
+"CDPDIGLYSYN-RXN": # EC 2.7.7.41, BioCyc
+    "CTP" + "L-PHOSPHATIDATE" + "PROTON" <> "CDPDIACYLGLYCEROL" + "PPI"
+    ~
+    #LEFT-TO-RIGHT
+
+"PHOSPHAGLYPSYN-RXN": # EC 2.7.8.5 in BioCyc; CDPgad , "L-1-PHOSPHATIDYL-GLYCEROL-P" (call it PG-P ?)
+    "CDPDIACYLGLYCEROL" + "GLYCEROL-3P" <> "CMP" + "L-1-PHOSPHATIDYL-GLYCEROL-P" + "PROTON"
+    ~
+    #LEFT-TO-RIGHT
+
+"PGPPHOSPHA-RXN": # EC 3.1.3.27 ,in BioCyc
+    "L-1-PHOSPHATIDYL-GLYCEROL-P" + "WATER" -> "L-1-PHOSPHATIDYL-GLYCEROL" + "Pi"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"CARDIOLIPSYN-RXN": # EC 2.7.8- , in BioCyc
+    2 "L-1-PHOSPHATIDYL-GLYCEROL" -> "CARDIOLIPIN" + "GLYCEROL"
+    ~
+    #LEFT-TO-RIGHT
+
+############ PETDITOGLYCAN SYNTHESYS
+
+"RXN-11295":
+    "CPD-12298" + "Charged-GLY-tRNAs" <> "CPD-12242" + "GLY-tRNAs" + "PROTON"
+    ~
+    #LEFT-TO-RIGHT
+
+"RXN-11296":
+    "CPD-12242" + 2 "Charged-GLY-tRNAs" <> "CPD-12243" + 2 "GLY-tRNAs" + 2 "PROTON"
+    ~
+    #LEFT-TO-RIGHT
+
+"RXN-11297":
+    "CPD-12243" + 2 "Charged-GLY-tRNAs" -> "CPD-12297" + 2 "GLY-tRNAs" + 2 "PROTON"
+    ~
+    #LEFT-TO-RIGHT
+
+"RXN-11291": 
+    2 "CPD-12297" <> "PROTON" + "UNDECAPRENYL-DIPHOSPHATE" + "CPD-12259"
+    ~
+    #LEFT-TO-RIGHT
+
+"GLYCINE--TRNA-LIGASE-RXN": # ADDED EXTRA! NOT IN PWY;  EC 6.1.1.14 
+    "GLY-tRNAs" + "GLY" + "ATP" -> "Charged-GLY-tRNAs" + "PPI" + "AMP"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-11339": # reac with all known compounds but was missing in MODEL
+    "CPD-7695" + "AMMONIUM" <> "CPD-12298" + "WATER"
+    ~
+    #LEFT-TO-RIGHT
+
+##"RXN-15521": #Check stoi balance! Not really needed, some polymerization after final Pep is already produced
+##    "Peptidoglycan-with-L-lysine-pentapeptide" + "CPD-7695" <> "UNDECAPRENYL-DIPHOSPHATE" + "Peptidoglycan-with-L-lysine-pentapeptide"
+##    ~
+##    #LEFT-TO-RIGHT
+
+##PepGly_bm_tx: # Transporter moved to BM planktonic module. C239H388N52O94P2 , 5555.9 Daltons MW
+##    x_PepGly <- "CPD-12230"
+##    ~
+
+# not in dbs: CPD-12297, 43, 42 , added to Extracompounds
+
+############### WTA SYNTHESIS
+
+"RIBITOL-5-PHOSPHATE-2-DEHYDROGENASE-RXN":
+    "CPD-372" + "NADP" <- "RIBULOSE-5P" + "NADPH" + "PROTON"
+    ~
+    #PHYSIOL-RIGHT-TO-LEFT
+
+"RXN-18006":
+    "CPD-5802" + "CPD-606" -> "CPD-19301" + "CMP" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18007": # "CPD-19301" only in MetaCyc
+    "CPD-1111" + "CPD-19301" -> "CMP" + "CPD-19302" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18014": # Unknowns: "D-alanine-carrier-protein", "D-Ala-DltC"
+    "ATP" + "D-ALANINE" + "D-alanine-carrier-protein" -> "D-Ala-DltC" + "AMP" + "PPI"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18008": # Unknowns: "CPD-19303" (Its a polymer!!): n-1 CDP-ribitol (1111)
+    #= n-1 CMP and polymer (Rib-ol-P)n)-
+    "CPD-1111" + "CPD-19302" -> "CMP" + "CPD-19303" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"2.4.1.53-RXN": # Unknowns: "CPD-19303", "CPD-19793"
+    "UDP-N-ACETYL-D-GLUCOSAMINE" + "CPD-19303" -> "CPD-19793" + "UDP" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18020": # Unknowns: "CPD-19793"
+    "UDP-N-ACETYL-D-GLUCOSAMINE" + "CPD-19793" -> "CPD-19311" + "UDP" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"TRANS-RXN-314": # Unknowns: "CPD-19311" 
+    "CPD-19311" + "ATP" + "WATER" -> "CPD-19311_peri" + "ADP" + "Pi" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18013":  # Unknowns: "L-1-PHOSPHATIDYL-GLYCEROL" (make PG), "1-Phosphatidyl-2-O-D-Ala-Glycerol",
+    #"D-alanine-carrier-protein", "D-Ala-DltC"
+
+    "D-Ala-DltC" + "L-1-PHOSPHATIDYL-GLYCEROL" -> "1-Phosphatidyl-2-O-D-Ala-Glycerol"
+    + "D-alanine-carrier-protein"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18027": # It binds WTA (19305) to a precursor of peptidoglycan 
+    "CPD-19305" + "CPD-12297" + "WATER" -> "Rbo-P-Teichoic-aureus-peptidoglycan"
+    + "CPD-9646" + "UNDECAPRENYL-DIPHOSPHATE" + 2 "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"2.7.7.40-RXN":
+    "CTP" + "CPD-372" + "PROTON" <> "CPD-1111" + "PPI"
+    ~
+    #LEFT-TO-RIGHT
+
+"6.1.1.13-RXN": # Unknowns: "CPD-19311", "CPD-19305", "L-1-PHOSPHATIDYL-GLYCEROL",
+    #"1-Phosphatidyl-2-O-D-Ala-Glycerol", 
+    "1-Phosphatidyl-2-O-D-Ala-Glycerol" + "CPD-19311_peri" -> "L-1-PHOSPHATIDYL-GLYCEROL"
+    + "CPD-19305" # "CPD-19305" is WTA
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+############ LTA SYNTHESIS
+
+"RXN-18039": # Unknown: ALL!!!
+    "1-Phosphatidyl-2-O-D-Ala-Glycerol" + "GlcNAc-Gro-P-n-Gro-P-Glc2-DAG" -> "L-1-PHOSPHATIDYL-GLYCEROL"
+    + "Type-I-LTA"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18038": # Unknown: "Gro-P-n-Gro-P-Glc2-DAG" , "GlcNAc-Gro-P-n-Gro-P-Glc2-DAG" 
+    "CPD-19317" + "Gro-P-n-Gro-P-Glc2-DAG" -> "GlcNAc-Gro-P-n-Gro-P-Glc2-DAG" + "CPD-9646" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18037": # Unknown: "Gro-P-Glc2-DAG" plus the same
+    "L-1-PHOSPHATIDYL-GLYCEROL" + "Gro-P-Glc2-DAG" -> "Gro-P-n-Gro-P-Glc2-DAG" + "DIACYLGLYCEROL"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-15117": # Unknowns: same
+    "CPD-12575" + "D-Glucosyl-12-diacyl-glycerols" <> "diacyl-3-O-glucl-1-6-gluc-sn-glycerol" + "UDP"
+    + "PROTON"
+    ~
+    #LEFT-TO-RIGHT
+
+"RXN-18035": # Unknown: same
+    "L-1-PHOSPHATIDYL-GLYCEROL" + "diacyl-3-O-glucl-1-6-gluc-sn-glycerol" -> "Gro-P-Glc2-DAG"
+    + "DIACYLGLYCEROL"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-18036":
+    "UDP-N-ACETYL-D-GLUCOSAMINE" + "CPD-9646" -> "CPD-19317" + "UDP"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-16648": # Unknown: "D-Glucosyl-12-diacyl-glycerols"
+    "CPD-12575" + "DIACYLGLYCEROL" <> "D-Glucosyl-12-diacyl-glycerols" + "UDP" + "PROTON"
+    ~
+    #LEFT-TO-RIGHT
+
+############
+## Many reacs are here instead of in the model because several comps involved
+## are in Unwanted for simplicity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

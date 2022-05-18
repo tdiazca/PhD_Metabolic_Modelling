@@ -1,0 +1,864 @@
+Structural()
+
+#
+##
+### initially based on BM comp by Heinemann 2005
+##
+#
+
+
+    ## Amino Acids
+
+ALA_AA_bm_tx: 
+	x_ALA <- "L-ALPHA-ALANINE" 
+	~
+ARG_AA_bm_tx: 
+	x_ARG <- "ARG"
+	~
+ASN_AA_bm_tx: 
+	x_ASN <- "ASN"
+	~
+ASP_AA_bm_tx: 
+	x_ASP <- "L-ASPARTATE"
+	~
+CYS_AA_bm_tx:
+	x_CYS <- "CYS"
+	~
+GLN_AA_bm_tx: 
+	x_GLN <- "GLN"
+	~
+GLT_AA_bm_tx: 
+	x_GLT <- "GLT"
+	~
+##DGLT_AA_bm_tx: 
+##	x_DGLT <- "D-GLT" # only in cell wall(involved in peptidoglycan synth)
+##	~
+GLY_AA_bm_tx:
+	x_GLY <- "GLY"
+	~
+HIS_AA_bm_tx:
+	x_HIS <- "HIS"
+	~
+ILE_AA_bm_tx: 
+	x_ILE <- "ILE"
+	~
+LEU_AA_bm_tx: 
+	x_LEU <- "LEU"
+	~
+LYS_AA_bm_tx:  
+	x_LYS <- "LYS"
+	~
+MET_AA_bm_tx: 
+	x_MET <- "MET"
+	~
+PHE_AA_bm_tx: 
+	x_PHE <- "PHE"
+	~
+PRO_AA_bm_tx: 
+	x_PRO <- "PRO"
+	~
+SER_AA_bm_tx: 
+	x_SER <- "SER"
+	~
+THR_AA_bm_tx: 
+	x_THR <- "THR"
+	~
+TRP_AA_bm_tx: 
+	x_TRP <- "TRP"
+	~
+TYR_AA_bm_tx:
+	x_TYR <- "TYR"
+	~
+VAL_AA_bm_tx: 
+	x_VAL <- "VAL"
+	~
+
+    ## Nucleotides # A,C,G,T,U; nucleosides: AMP, CMP, TMP, GMP, UMP
+	
+######AMP_bm_tx:
+######    x_AMP <- "AMP"
+######    ~
+######CMP_bm_tx:
+######        x_CMP <- "CMP"
+######        ~
+
+    ## DNA Nucleotides
+
+DATP_bm_tx:
+    x_DATP <- "DATP"
+    ~
+DCTP_bm_tx:
+    x_DCTP <- "DCTP"
+    ~
+DGTP_bm_tx:
+    x_DGTP <- "DGTP"
+    ~
+DTTP_bm_tx:
+    x_DTTP <- "TTP"
+    ~
+######DAMP_bm_tx:
+######    x_DAMP <- "DAMP"
+######    ~
+######DCMP_bm_tx:
+######    x_DCMP <- "DCMP"
+######    ~
+######DGMP_bm_tx:
+######    x_DGMP <- "DGMP"
+######    ~
+######DTMP_bm_tx:
+######    x_DTMP <- "DTMP"
+######    ~
+
+    ## RNA Nucleotides
+
+ATP_bm_tx:
+    x_ATP <- "ATP"
+    ~
+CTP_bm_tx:
+    x_CTP <- "CTP"
+    ~
+GTP_bm_tx:
+    x_GTP <- "GTP"
+    ~  
+UTP_bm_tx:
+    x_UTP <-  "UTP"
+    ~
+######UMP_bm_tx:
+######    x_UMP <- "UMP"
+######    ~
+
+    ## LIPIDS
+ 
+##PALMITATE_bm_tx:  # (generic fatty acid) 
+##    x_PALMITATE <- "PALMITATE"  
+##    ~
+
+    ## MEMBRANE PHOSPHOLIPIDS
+
+##PA_bm_tx: # phosphatidic acid
+##    x_PA <- "L-PHOSPHATIDATE"
+##    ~
+
+DAG_bm_tx:
+    x_DAG <- "DIACYLGLYCEROL"
+    ~
+
+##CDPdag_bm_tx:
+##    x_CDPdag <- "CDPDIACYLGLYCEROL"
+##    ~
+##
+##PGP_bm_tx:
+##    x_PGP <- "L-1-PHOSPHATIDYL-GLYCEROL-P"
+##    ~
+
+PG_bm_tx:
+    x_PG <- "L-1-PHOSPHATIDYL-GLYCEROL"
+    ~
+
+CL_bm_tx:
+    x_CL <- "CARDIOLIPIN"
+    ~
+
+LTA_bm_tx: # lipoteichoic acids, connects cell wall to cell membrane
+    x_LTA <- "Type-I-LTA"
+    ~
+
+"GLC2-DAG_bm_tx": # lipoteichoic acids, connects cell wall to cell membrane
+    "x_GLC2-DAG" <- "diacyl-3-O-glucl-1-6-gluc-sn-glycerol"
+    ~
+
+"GLC-DAG_bm_tx": # lipoteichoic acids, connects cell wall to cell membrane
+    "x_GLC-DAG" <- "D-Glucosyl-12-diacyl-glycerols"
+    ~
+
+    ## Menaquinol/nones (lipids) # not produced so far
+
+Menaquinone_bm_tx:  # both exporters together form an incons subset
+    "x_Menaquinone" <- "MENAQUINONE"  
+    ~
+
+##Menaquinol_bm_tx: 
+##    "x_Menaquinol" <- "REDUCED-MENAQUINONE"  
+##    ~
+
+    ## PEPTIDOGLYCAN CELL WALL: NAcGlc and N-acetyl-muramic acid
+
+PepGly_bm_tx: # C239H388N52O94P2 , 5555.9 Daltons MW
+    x_PepGly <- "CPD-12230"
+    ~
+
+    ## WTA: wall teichoic acids, cell wall
+
+"WTA-PG_bm_tx": # in BM planktonic
+    "x_WTA-PG_tx" <- "Rbo-P-Teichoic-aureus-peptidoglycan"
+    ~
+
+##WTA_bm_tx: # possibly the EC TA in BM biofilm ?
+##    x_WTA <- "CPD-19305"
+##    ~
+
+    ## Pool solutes
+
+glycogen_bm_tx:
+    x_glycogen <- "glycogen"
+    ~
+
+acCoA_bm_tx:
+    x_acCoA <- "ACETYL-COA"
+    ~
+
+succCoA_bm_tx:
+    x_succCoA <- "SUC-COA"
+    ~
+
+CoA_bm_tx:
+    x_CoA <- "CO-A"
+    ~
+
+FAD_bm_tx: 
+    x_FAD <- "FAD"
+    ~
+
+NAD_bm_tx:  
+    x_NAD <- "NAD"
+    ~
+
+NADH_bm_tx: 
+    x_NADH <- "NADH"
+    ~
+
+NADP_bm_tx: 
+    x_NADP <- "NADP"
+    ~
+
+NADPH_bm_tx: 
+    x_NADPH <- "NADPH"
+    ~
+
+###############################################
+####### RAMDOM STUFF
+##
+
+##THIAMINE_bm_tx:
+##    x_THIAMINE <- "THIAMINE"
+##    ~
+##
+##"THIAMINE-P_bm_tx":
+##    "x_THIAMINE-P" <- "THIAMINE-P"
+##    ~
+
+##SIROHEME_bm_tx:
+##    x_SIROHEME <- "SIROHEME"
+##    ~
+##PROTOHEME_bm_tx: # 
+##    x_PROTOHEME <- "PROTOHEME"
+##    ~
+
+##'Heme' is usually understood as any tetrapyrrolic chelate of iron. The terms 'ferroheme' and 'ferriheme' refer to the Fe(II) and Fe(III) oxidation states in heme (even though Fe(IV) is found as a catalytic intermediate in some systems).
+##
+##Heme b, whose ferrous form is known as protoheme IX, is the immediate product of the heme biosynthesis pathways (by ferro-chelation of protoporphyrin IX) and the most abundant heme form. It is found in common proteins such as hemoglobin and myoglobin.
+##
+##Heme b is part of b-type cytochromes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

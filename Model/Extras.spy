@@ -1,0 +1,382 @@
+Structural()
+
+# Compounds with undefined formula: biosynthesis reactions added as condensed reacs
+
+############################# TCA
+
+##SucDH_mena: # RXN-14971?
+##    "SUC" + "MENAQUINONE" -> "REDUCED-MENAQUINONE" + "FUM"
+##    ~
+
+############################# 
+
+"LACTATE-RACEMASE-RXN": # EC 5.1.2.1
+    "L-LACTATE" <> "D-LACTATE"
+    ~
+
+############################ RESPIRATION
+
+"L-LACTDEHYDROGFMN-RXN": # in Heinemann ETC # DLACTDEHYDROGFAD-RXN already in model with D-LACTATE
+    "L-LACTATE" + "MENAQUINONE" -> "PYRUVATE" + "REDUCED-MENAQUINONE"
+    ~
+
+##"1.2.1.2-RXN": # (NAD_formate_DH) in Heinemann model for aureus (KEGG annotation)
+##    #but not in BioCyc RP62A or aureus. Gene fdh not in BioCyc RP62A. No other genes either.
+##    1 "FORMATE" + 1 "NAD" <> 1 "CARBON-DIOXIDE" + 1 "NADH"
+##    ~
+
+############################# BUTANEDIOL PRODUCTION 
+
+"RR-BUTANEDIOL-DEHYDROGENASE-RXN": # EC 1.1.1.4 (not in dbs), SERP2032 in KEGG
+        #look for genes in ATC if we decide we need it
+    "BUTANEDIOL" + "NAD" <> "ACETOIN" + "NADH" + "PROTON"
+    ~
+    #REVERSIBLE
+
+############################ ACETOIN PRODUCTION
+
+##"ACETOLACTSYN-RXN": already in model # EC 2.2.1.6 acetolactate synthase, genes SERP_RS 08320/8325/10690
+
+"RXN-6081": # SPONTANEOUS, "Acceptor" and "Donor-H2" for "MENAQUINONE"
+                            #since both transfer two electrons and two protons 
+    "2-ACETO-LACTATE" + "MENAQUINONE" + "PROTON" -> "DIACETYL" + "CARBON-DIOXIDE" + "REDUCED-MENAQUINONE"
+    ~
+    #LEFT-TO-RIGHT
+
+"RXN-11032": # EC 1.1.1.304, gene SERP_RS11685 "CPD-255" for "ACETOIN"
+    "ACETOIN" + "NAD" <- "DIACETYL" + "NADH" + "PROTON"
+    ~
+    #RIGHT-TO-LEFT
+
+############################ GLYCOGEN DEGRADATION I
+
+"GLYCOPHOSPHORYL-RXN": # EC 2.4.1.1 In BioCyc for RP62A (but no gene associated) # WATER needed to balance
+    "glycogen" + "Pi" -> "GLC-1-P" + "WATER"
+    ~
+    #LEFT-TO-RIGHT
+
+########################### GLYCOGEN BIOSYNTHESIS
+
+#GLYCOGENSYNTH-PWY:glycogen biosynthesis I (from ADP-D-Glucose)
+    #glycogen accumulating bacteria use ADP-D-glucose (MetaCyc, not in BioCyc RP62A)
+
+"GLUC1PADENYLTRANS-RXN": #EC 2.7.7.27
+    "PROTON" + "GLC-1-P" + "ATP" -> "ADP-D-GLUCOSE" + "PPI"
+    ~
+    #LEFT-TO-RIGHT
+
+"GLYCOGENSYN-RXN": #EC 2.4.1.21 "1-4-alpha-D-Glucan" Substituted by glycogen
+#H2O and H added for balance ; REV BRENDA for Ecoli
+    "ADP-D-GLUCOSE" + "WATER" <> "ADP" + "glycogen" + "PROTON"
+    ~
+    #REVERSIBLE
+
+########################### PIA BIOSYNTHESIS
+
+"PIA1_synth": # EC 2.4.1.- PgaC Ecoli, icaAD Sepi RP62A ; phosphatase
+            #only fx for ica in BioCyc RP62A is transcriptional regulator 
+    "UDP-N-ACETYL-D-GLUCOSAMINE" + "WATER" -> "PROTON" + "PIA1" + "UDP"
+    ~
+    #LEFT-TO-RIGHT
+
+
+"PIA2_synth": # No EC assigned ; icaB gene ; deacetylase
+    "PIA1" + "WATER" -> "PIA2" + "ACET"
+    ~
+    #LEFT-TO-RIGHT
+
+##"RXN0-5413": EC 2.4.1- pgaA, pgaC ; PgaC :35 percent aa identity and 57 percent similarity to IcaA
+##    "UDP-N-ACETYL-D-GLUCOSAMINE" + "N-acetyl-D-glucosamine" -> "CPD0-1192" + "UDP"
+##    ~ #  "CPD0-1192" : poly-beta-1,6-N-acetyl-D-glucosamine
+##    #PHYSIOL-LEFT-TO-RIGHT
+
+##"RXN0-5414": No EC assigned; Ecoli gene PgaB (poly-beta-1,6-N-acetyl-D-glucosamine N-deacetylase);
+##Homologous gene in BioCyc RP62A: icaB
+##        #EC 3.1.1.58 BRENDA poly-beta-1,6-N-acetyl-D-glucosamine N-deacetylase for these genes
+##    "CPD0-1192" + "WATER" -> "CPD0-1193" + "ACET"
+##    ~ # "CPD0-1193" : partially N-deacetylated poly-beta-1,6-N-acetyl-D-glucosamine
+##    #PHYSIOL-LEFT-TO-RIGHT
+
+########################### MENAQUINONE BMP
+
+"RXN-8992":# EC 2.5.1.90 , gene ispB and ispA , PWY octaprenyl diphosphate biosynthesis
+    "FARNESYL-PP" + 5 "DELTA3-ISOPENTENYL-PP" <> "OCTAPRENYL-DIPHOSPHATE" + 5 "PPI"
+    ~
+    #LEFT-TO-RIGHT
+
+Autoinducer_2_tx: # CYS bs and MENAQUINONE bs; ydgG in B.sub and tqsA in Ecoli
+    "x_Autoinducer_2A" <- "CPD-10774"
+    ~
+
+## PWY-6151 S-adenosyl-L-methionine cycle I leading to autoinducer Al-2 biosynthesis
+## and in prod CYS from MET (last reac missing in BioCyc RP62A)
+## About 20% of the L-methionine pool is used as a building block of proteins.
+## The rest is converted to S-adenosyl-L-methionine (SAM), the major methyl donor in the cell.
+## When SAM donates its methyl group, it is converted to S-adenosyl-L-homocysteine.
+## This molecule can be recycled back to SAM via the S-adenosyl-L-methionine cycle,
+## also known as the activated methyl cycle (AMC). 
+
+############################# SULPHUR METABOLISM (including CYS and MET)
+
+    ## Export of HS (hydrogen sulfide, formula SH2 to be allowed since its a gas)
+        # produced when CYS is used as N source (CYS degradation)
+HS_tx:
+    x_HS <- "HS"
+    ~
+
+############################# Reacs with preference for either NADPH or NADH
+
+"24-DIAMINOPENTANOATE-DEHYDROGENASE-RXN-(NAD)": # Solved IncoSubset!!: EC 1.4.1.12 uses either, NADH more imp in pathway.
+    "WATER" + "NAD" + "24DINH2-PENTANOATE" -> "NADH" + "CPD-299" + "PROTON" + "AMMONIUM"
+    ~
+
+############################ BMP SIROHEME and PROTOHEME 
+
+##Siro_protoheme_synth: # by maite, condensed reaction GLURS-RXN plus GLUTRNAREDUCT-RXN (without GLT-tRNAs)
+##    "GLT" + "ATP" + "PROTON" + "NADPH" -> "PPI" + "AMP" + "GLUTAMATE-1-SEMIALDEHYDE" + "NADP"
+##    ~
+##    #PHYSIOL-LEFT-TO-RIGHT
+
+############################ AA BIOSINTHESYS and DEGRADATION
+
+#################### PHE biosynthesis
+
+"PHEAMINOTRANS-RXN": # EC-2.6.1.57 / EC-2.6.1.9 (genes SERP0387 (hisC) KEGG/BioCyc RP62A)
+    # This enz can have has substrates: TYR, PHE, TRP and histinidiol phosphate
+    "PHENYL-PYRUVATE" + "GLT" <> "PHE" + "2-KETOGLUTARATE"
+    ~
+    #REVERSIBLE
+
+#################### CYS biosynthesis (from methionine (through/and homocysteine))
+    #### An essential reac was exporter for Autoinducer_2A (in Extras.spy)
+
+"325-BISPHOSPHATE-NUCLEOTIDASE-RXN": # EC-3.1.3.7_3.1.13.3 ; SERP1267 in KEGG and BioCyc, sulfur met.
+                                      # needed for obtaining HS, and so BS of CYS and MET from SER.
+    "3-5-ADP" + "WATER" -> "Pi" + "AMP"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+    
+        # gene seq in ref and lab strain (ACT). PFAM = DHH phosphatase family; phosphoesterases
+        # catalyse processive degradation of single-stranded DNA in a 5'-to-3' direction
+
+### Reacs below included for accuracy (but CYS BS already enable)
+
+"RXN-17600": # EC-2.5.1.47 (already in model)
+    "ACETYLSERINE" + "HOMO-CYS" <> "L-CYSTATHIONINE" + "ACET" + "PROTON"
+    ~
+
+################### MET biosynthesis
+
+"O-SUCCHOMOSERLYASE-RXN": # EC 2.5.1.48 , no genes RP62A in BioCyc (KEGG: SERP0037)
+                              # In ref_RP62A and lab_strain (ACT)      
+    "O-SUCCINYL-L-HOMOSERINE" + "CYS" <> "L-CYSTATHIONINE" + "SUC" + "PROTON"
+    ~
+    #REVERSIBLE
+
+"RXN-9384": # EC-2.5.1.48 , no genes RP62A in BioCyc (KEGG: SERP0037)
+                             # In ref_RP62A and lab_strain (ACT) 
+    "O-SUCCINYL-L-HOMOSERINE" + "HS" <> "PROTON" + "HOMO-CYS" + "SUC"
+    ~
+    #REVERSIBLE
+
+##"HOMSUCTRAN-RXN": # EC-2.3.1.46 ; genes: none in dbs (not in KEGG)
+##                       # Not in ref_RP62A and lab_strain (ACT)  
+##    "HOMO-SER" + "SUC-COA" -> "O-SUCCINYL-L-HOMOSERINE" + "CO-A"
+##    ~
+##    #LEFT-TO-RIGHT
+
+################# Reacs below added for accuracy (but MET BS is already enabled)
+
+"CYSTATHIONINE-BETA-LYASE-RXN": # EC-4.4.1.13 (EC-4.4.1.8) genes SERP0036 KEGG (MET bs)
+                                 # In ref_RP62A and lab_strain (ACT)  
+    "L-CYSTATHIONINE" + "WATER" -> "AMMONIUM" + "PYRUVATE" + "HOMO-CYS"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"RXN-15131": # EC-4.4.1.13 (EC-4.4.1.8), genes SERP0036 KEGG (MET bs)
+              # In ref_RP62A and lab_strain (ACT)  
+    "L-CYSTATHIONINE" -> "PROTON" + "2-AMINOACRYLATE" + "HOMO-CYS"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"Acetylhomoser_cys_rxn_b": # 'EC-2.5.1.48' ,Added by me, according to pathway in Kegg for RP62A
+                          # In ref_RP62A and lab_strain (ACT)  
+    "CPD-667" + "CYS" -> "PROTON" + "L-CYSTATHIONINE" + "ACET"
+    ~
+    #LEFT-TO-RIGHT
+
+################## ASP biosynthesis
+
+"ASPAMINOTRANS-RXN": # EC-2.6.1.1, automatically predicted through gene homology.
+                        # Gene SERP2159 in BioCyc, in ref and lab strain (ACT).
+                         # PFAM = Aminotransferase class-III subfamily.
+    "L-ASPARTATE" + "2-KETOGLUTARATE" <> "GLT" + "OXALACETIC_ACID"
+    ~
+    #REVERSIBLE
+
+################## ASN biosynthesis
+
+"RXN490-3616": #EC-6.1.1.22 = SERP1024 (BioCyc)
+                # PFAM = Aminoacyl-tRNA synthetase (asparaginyl-tRNA synthetase)
+    "ASN-tRNAs" + "L-ASPARTATE" + "ATP" -> "L-aspartyl-tRNAAsn" + "PPI" + "AMP"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+"6.3.5.6-RXN": # EC-6.3.5.6 = SERP1438 (gatA), BioCyc aspartyl-tRNA(Asn)/glutamyl-tRNA(Gln) amidotransferase subunit A
+                # PFAM = amidase
+    "GLN" + "L-aspartyl-tRNAAsn" + "ATP" + "WATER" -> "GLT" + "Charged-ASN-tRNAs" + "Pi" + "ADP" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+    
+"RXN-12460": # EC-3.1.1.29 = SERP0140 (asnC), BioCyc
+               # PFAM = peptidyl-tRNA hydrolase
+    "Charged-ASN-tRNAs" + "WATER" -> "ASN" + "ASN-tRNAs" + "PROTON"
+    ~
+    #PHYSIOL-LEFT-TO-RIGHT
+
+################## THR DEGRA / GLY BS (AA util)
+
+"THREONINE-ALDOLASE-RXN": # EC-4.1.2.5 ,gene SERP_RS04450 in Ref RP62A, gLY 1 in Lab strain RP62A
+    "THR" <> "ACETALD" + "GLY"
+    ~
+    #LEFT-TO-RIGHT
+
+# EC-4.1.2.48 in KEGG for RP62A.
+# Reac added cause gene SERP_RS04450 in BioCyc RP62A 22.6 but no reaction associated with it. This
+# gene encodes the enz threonine aldolase. Exactly same AA seq in S. epi M23864:W2(grey) in BRENDA
+# as in the lab (gLY 1) and ref strain (gene SERP_RS04450) for EC-4.1.2.5.
+# Source TrEMBL, annotation score low (1 from 1-5), status unreviewed.
+# BRENDA AA seq EC-4.1.2.48 S.aureus similar but with several AA changes.
+
+################  LEU / ILE degradation (AA util)
+
+"2KETO-4METHYL-PENTANOATE-DEHYDROG-RXN": # EC-1.2.1.25, gene GJJB-1083 or SERP1076 in db
+    "2K-4CH3-PENTANOATE" + "CO-A" + "NAD" -> "ISOVALERYL-COA" + "CARBON-DIOXIDE" + "NADH"
+    ~
+    #LEFT-TO-RIGHT
+
+######"RXN0-2301": # EC-1.3.8.4, here "ETF-Oxidized" subs by MENAQUINONE
+######    "ISOVALERYL-COA" + "MENAQUINONE" -> "3-METHYL-CROTONYL-COA" + "REDUCED-MENAQUINONE"
+######    ~
+######    #PHYSIOL-LEFT-TO-RIGHT
+######
+######"2-methylacyl-coa-dehydrogenase-rxn": # 2-METHYLACYL-COA-DEHYDROGENASE-RXN already in model), "ETF-Oxidized" subs by MENAQUINONE here
+######    "2-METHYL-BUTYRYL-COA" + "MENAQUINONE" <> "CPD-1083" + "REDUCED-MENAQUINONE"
+######    ~
+######    #REVERSIBLE
+
+###### Reacs below =  No genes present
+    
+##"METHYLGLUTACONYL-COA-HYDRATASE-RXN": # No genes (added by me to complete LEU degrad  LEU-DEG2-PWY)
+##    "3-HYDROXY-3-METHYL-GLUTARYL-COA" <> "WATER" + "TRANS-3-METHYL-GLUTACONYL-COA"
+##    ~
+##    #REVERSIBLE
+##
+##
+##"METHYLCROTONYL-COA-CARBOXYLASE-RXN": # No genes (added by me to complete LEU degrad  LEU-DEG2-PWY)
+##    "3-METHYL-CROTONYL-COA" + "HCO3" + "ATP" -> "TRANS-3-METHYL-GLUTACONYL-COA" + "ADP" + "Pi" + "PROTON"
+##    ~
+##    #PHYSIOL-LEFT-TO-RIGHT
+
+####"RXN-8629": # GLY cleveage, GLY degradadtion
+####    "DIHYDROLIPOYL-GCVH" + "NAD" <> "PROTEIN-LIPOYLLYSINE" + "NADH" + "PROTON"
+####    ~
+####    #REVERSIBLE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

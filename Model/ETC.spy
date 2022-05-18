@@ -1,0 +1,287 @@
+Structural()
+
+ATPSynth: # EC-7.1.2.2
+        "ADP" + "Pi" + 4 x_PROTON -> "ATP" + "WATER" + 3 "PROTON"
+        ~
+    # Stoich as per MetaCyc
+
+NADH_DH_mena: # EC-7.1.1.2:(NADH-DEHYDROG-A-RXN);
+	"NADH" + "MENAQUINONE" + 5 "PROTON" ->
+	"REDUCED-MENAQUINONE" + 4 x_PROTON + "NAD" 
+	~ 
+    # (NADH-DEHYDROG-A-RXN), Unwanted so r is kept in this modules since involved with x_PROTONS
+    # (NADH-DEHYDROG-A-RXN); EC-7.1.1.2 ; genes G1G46-546 = SERP_RS02740
+    # Unbalanced Biocyc RP62A 22.6, stoich as per MetaCyc.
+	
+Mena_oxid: # EC-7.1.1.8: (RXN-14107)
+	2 "Cytochromes-C-Oxidized" + "REDUCED-MENAQUINONE" ->
+	2 "Cytochromes-C-Reduced" + "MENAQUINONE" + 2 x_PROTON
+	~
+    #LEFT-TO-RIGHT
+
+    # Initially in BioCyc vs 20.1: EC-1.10.2.2 now EC-7.1.1.8. To Unwanted so is kept in this modules since involved with x_PROTONS
+    # This EC-1.10.2.2: (1.10.2.2-RXN) is REV according to MetaCyc but is for UBIQUINONES!
+        # (due maybe to low Gibbs force 4.785 kcal/mol)
+    # BioCyc vs 20.1 UBIQUINONE substituted by MENAQUINONE; is "RXN0-5244" half-reaction in vs 22.6.; and now no EC assigned
+    # EC-7.1.1.8  RXN-14107 in MetaCyc 22.6 is the corresponding reac for MENAQUINONES
+        # is IRREV in MetaCyc 22.6, still low Gibbs but we can also argue that the quinol pumps protons out
+            # and its structure doesnt have a rotational motor as ATPsynthase
+                # that could pump protons in. Safe to make IRREV
+
+    # Unbalanced Biocyc RP62A, stoich as per MetaCyc
+
+Cytochrome_C_oxidase: # EC-1.9.3.1: (CYTOCHROME-C-OXIDASE-RXN);
+        "OXYGEN-MOLECULE" + 4 "Cytochromes-C-Reduced" + 8 "PROTON" ->
+        4 "Cytochromes-C-Oxidized" + 2 "WATER" + 4 x_PROTON
+        ~
+        #PHYSIOL-LEFT-TO-RIGHT
+
+    # BioCyc vs 20.1. and MetaCyc 22.6 EC-1.9.3.1 (as it is in this module)
+    # In Unwanted so is kept in this modules since involved with x_PROTONS.
+    # EC-7.1.1.5 MetaCyc 22.6, "RXN-12164" menaquinols instead of cytochromes.
+    # EC-1.9.3.1 cytochrome-c oxidase (cytochrome aa3), in mitochondria, Arabidopsis and S. cerevisiae
+    # EC-7.1.1.5 is for cytochrome aa3-600 menaquinol oxidase (cytochrome c), the one in B.subtillis
+    # Cytochrome aa3 and cytochrome c are synonisms in MetaCyc 22.6 (see EC 1.9.3.1 -- cytochrome-c
+    # oxidase) for this and for consistency with the database, we will leave cytochromes as cytochrome C
+    # in the model.
+
+    ## "RXN-12164": ## EC 7.1.1.5
+    ##    2 "Menaquinols" + "OXYGEN-MOLECULE" + 8 "PROTON" ->
+    ##    2 "Menaquinones" + 8 "x_PROTON" + 2 "WATER"
+    ##    ~
+    ##    #PHYSIOL-LEFT-TO-RIGHT
+    
+        # Bacillus subtilis subtilis 168: cytochrome aa3-600 menaquinol oxidase:
+        # inferred from experiment: qoxD, qoxC, qoxB, qoxA. More closely related to Staph.
+        # This is lump of Mena_oxid and Cytochrome_C_oxidase. But I dont want to remove cytochromes
+        # from model since they are also involve in anaerobic respiration
+
+Nitrate_red_mena: # EC-1.7.5.1: (RXN0-3501) 
+        "NITRATE" + 2 "PROTON" + "REDUCED-MENAQUINONE" ->
+        "NITRITE" + "WATER" + "MENAQUINONE" + 2 x_PROTON
+        ~
+        #LEFT-TO-RIGHT
+
+    # Left as REV or inco subset with NITRATE-REDUCTASE-CYTOCHROME-RXN otherwise
+    # BioCyc vs 20.1 EC-1.7.5.1: RXN0-3501; nitrate reductase (quinone), gene: narJ (SERP1985)
+    # Not in BioCyc vs 22.6; Nitrate reduction reactions all missing in version 22.6!!
+    # BioCyc 22.6 RP62A, genes: SERP1985 = nitrate reductase molybdenum cofactor assembly chaperone.
+    # NarJ in other S.epi.
+    # Reactions in vs 20.1 kept for completeness.
+    # IRREV in diagram MetaCyc 22.6 and the specific reacs including this one. Only general reac is rev
+        # has a high negative Gibbs energy plus, pumps protons out and its structure is that of a quinol
+            # doesnt have a rotational motor as ATPsynthase that could pump protons in.
+            #  -69.33476 kcal/mol =  -290.1 Kjul/mol
+            # would be to make IRREV if it wasnt for the inconsisten subset.
+            # In reality, this reac will never occur together L-R with NITRATE-REDUCTASE-CYTOCHROME-RXN
+            
+    # (Uribe-Alvarez et al 2016, FEMS Pathogens and Disease)
+    # (Sasarman et al 1974 Journal of Bacteriology)
+
+#### Experimental evidence:
+##      (Uribe-Alvarez et al 2016, FEMS Pathogens and Disease) =
+    ##      cytochromes detected experimentally in S. epidermidis = Sepi ATCC 12228: cyt aa3 and cyt bo
+    ##      spectra also detected with mass spec, but the only operon found for cytochromes is qoxABCD
+    ##      (for aa3). This was explained as a consequence of promiscuous assembly of oxidases accepting
+    ##      a different heme group to that observed in original structure. Cyt bo reduced but still
+    ##      detected in anaerobiosis.
+    ##      MetaCyc 22.6: cytochrome aa3-600 menaquinol oxidase: qoxD, qoxC, qoxB, qoxA
+    ##      (Bacillus subtilis subtilis 168) = EC-7.1.1.5 involved with menaquinones.
+    ##      Would actually correspond to reaction catalised by EC-1.9.3.1 = Cytochrome_C_oxidase in model.
+
+    ## Cytochrome c oxidase is a synomism for cytochrome aa3: the enz contains 2 subunits (a and a3).
+        # A cupriferous cytochrome of the a type that catalyzes the oxidation of four molecules of
+        # ferrocytochrome c by molecular oxygen to produce four molecules of ferricytochrome c and 2H2O.
+        # Cytochrome aa3 and cytochrome c are synonisms in MetaCyc 22.6 (see EC 1.9.3.1 -- cytochrome-c
+        # oxidase). For this and for consistency with the database, we will leave cytochromes as cytochrome
+        # C in the model.
+
+##      (Sasarman et al 1974 Journal of Bacteriology)
+    ##      studied the role of menaquinones during anaerobic respiration in S. aureus.
+    ##      they found menaquinones to be essential for nitrate reduction.
+
+##      (Burke et al 1975, J of Bacteriology)
+    ##      studied nitrate reductase system in several organisms including S. aureus.
+    ##      described cytochrome system to be functionally linked to the nitrate reductase system.
+
+## This could be indicative of at least two independent mechanisms of nitrate reduction present in
+        ## Staphylococci: one dependent solely on menaquinones and another one depending on both,
+        ## menaquinones and cytochromes (with cytochromes being reduced again through the oxidation
+        ## of menaquinones).
+
+#### ExtraCompounds.dat =
+##UNIQUE-ID - Cytochromes-B-Oxidized
+##CHEMICAL-FORMULA - (CytochromeC 1) # Fe3+
+##//
+##UNIQUE-ID - Cytochromes-B-Reduced
+##CHEMICAL-FORMULA - (CytochromeC 1) # Fe2+ , no H involved
+
+###############################
+
+# OTHER ETC REACTIONS IN MODEL:
+# THIS RX ARE COMMENTED HERE BECAUSE THEY ARE ALREADY IN MODEL BUT ARE NOT INVOLVED WITH x_PROTON
+# BioCyc 20.1 and MetaCyc 22.6 pathway: NITRATE REDUCTION IV (dissimilatory) (nitrate respiration)
+# PWY-5674
+
+## NITRATE-REDUCTASE-CYTOCHROME-RXN: # EC-1.9.6.1 ; genes: SERP1985
+##	"NITRATE" + 2 "Cytochromes-C-Reduced" + 2 "PROTON" ->
+##	"NITRITE" + 2 "Cytochromes-C-Oxidized" + "WATER"
+##	 ~
+##    #PHYSIOL-LEFT-TO-RIGHT
+
+      # Again, in BioCyc 20.1 and not in 22.6. Stoichiometry as per MetaCyc 22.6
+      # BioCyc vs 20.1 EC-1.9.6.1: NITRATE-REDUCTASE-CYTOCHROME-RXN; respiratory nitrate reductase
+      # (quinone), gene: narJ (SERP1985)
+      # Not in BioCyc vs 22.6; Nitrate reduction reactions all missing in version 22.6!
+      # BioCyc 22.6 RP62A, genes: SERP1985 = nitrate reductase molybdenum cofactor assembly chaperone.
+      # NarJ in other S. epi.
+      # Reactions in vs 20.1 kept for completeness.
+
+##1.7.2.2-RXN: # EC-1.7.2.2
+##	1 "NITRITE" + 6 "Cytochromes-C-Reduced" + 8 "PROTON"
+##	-> 6 "Cytochromes-C-Oxidized" + 2 "WATER" + 1 "AMMONIUM"
+##	~
+    # EC-1.7.2.2, High Gibbs Free E. Irrev LR makes PO ratio much closer to literature data.
+
+      # Again, in BioCyc 20.1 and not in 22.6. Must have been gap-filles in vs 20.1.
+      # No genes ; But is catalised by cytochrome C
+
+##RXN0-6377-(NAD): # EC-1.7.1.4; gene: SERP_RS09920 (SERP1989)
+##	2 WATER + 3 NAD + 1 AMMONIUM <-
+##      1 NITRITE + 3 NADH + 5 PROTON
+##	~
+
+##RXN0-6377-(NADP): # EC-1.7.1.4; gene: SERP_RS09920 (SERP1989)
+##	2 WATER + 3 NADP + 1 AMMONIUM <-
+##      1 NITRITE + 3 NADPH + 5 PROTON
+##	~
+
+    # BioCyc vs 20.1 and vs 22.6.
+    # EC-1.7.1.4 ; nitrite reductase [NAD(P)H], gene: SERP_RS09920 (SERP1989)
+
+# Stoich as per MetaCyc
+## In BioCyc 20.1 for RP62A many of these reacs were unbalanced. 
+### Most are present in N315 model Heinemann 2005: no clear evidence for their stoich in their
+### refs(KEGG etc.)
+
+################ MORE NOTES ON THE ETC
+
+## For the identification of reactions involved in the ETC I investigated those
+## described in the publication of GSM for S. aureus by Heinemann 2005, which ETC
+## is based on enzymes encoded by genes identified in the KEGG N315 sequence annotation
+## and had been revised by comparison with biochemical literature in S. aureus.
+## I identified these reactions in my model, which were initially extracted from BioCyc
+## RP62A database version 20.1 and corrected their stoichiometry as described in MetaCyc
+## since these reactions in BioCyc RP62A were not balanced and/or based on less gene
+## identifications. Heinemann et al corrected the erroneously predicted presence of
+## ubiquinones by menaquinones (since only menaquinones are known to be present in
+## S. aureus according to previously published biochemical data) and so did I in my
+## model. They also considered cytochromes involved in S. aureus ETC to be cytochrome b,
+## again, based on published biochemical data.
+
+## Cytochromes detected experimentally in S.epidermidis were cytochromes aa3 and bo,
+## with bo still detected in microanaerobic and anaerobic conditions. For consistency with
+## the literature and the database (MetaCyc), the cytochromes considered in the ETC reactions
+## were cytochrome C (since cytochrome aa3 is a synonism for cytochrome c in MetaCyc.
+##
+## Anaerobic respiration:  OK, using NO3_reduct and NO2_redut (NO2 can also be reduced to NH4).
+## Now NO2 can be exported from the cell. However, the model will preferentially reduce NO2 to
+## NH3 and this to NH4 since this will generate a higher ATP/NADH yield.
+##
+## Reacs were originally imported from BioCyc RP62A 20.1. Anaerobic resp: nitrate_red (cytochromes),
+## nitrate_red_mena (menaquinones) and nitrite_red (cytochromes). The role of menaquinones during
+## anaerobic respiration in Saureus has been studied in the past. They were described as essential
+## for nitrate reduction during anaerobic respiration in Saureus (Sasarman et al 1974).
+##
+## A study in Sepi ATTC 12228 by (Uribe-Alvarez et al 2016) showed that cytochrome aa3 expression
+## becomes undetectable, expression of cytochrome b is reduced and nitrate reductase expression
+## increased during anaerobiosis and proposed a model for respiration that considers nitrate reductase
+## activity to be directly linked to menaquinones (menaquinone-dependant nitrate reductase?),
+## but not cytochromes.
+##
+## However, nitrate reductase system in several orgs including Saureus has been functionally described
+## as a cytochrome-dependent system (burke et al 1975, J of Bacteriology). Both nitrate reductase
+## reactions were therefore included in this model.
+
+## Respiration reactions present in version 20.1 and missing in version 22.6:
+##
+##    1.10.2.2-RXN                        # menaquinone
+##    CYTOCHROME-C-OXIDASE-RXN            # cytochromes
+##
+##    # reactions below involved in nitrate reduction during anaerobis respiration
+##    RXN0-3501                           # menaquinone
+##    NITRATE-REDUCTASE-CYTOCHROME-RXN    # cytochromes
+##    1.7.2.2-RXN                         # cytochromes
+##
+## There are no reactions involved in anaerobic respiration using nitrate as final
+## electron acceptor in version 20.1 despite this as been described in the literature
+## for S. aureus and S. epidermidis. Therefore, for completeness, I have stick to BioCyc version 20.1
+## for construction of this model. The other prior version to 22.6 was 20.5, when the reactions in both
+## versions were compared, no significant changes appeared, so model left as constructed from version 20.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

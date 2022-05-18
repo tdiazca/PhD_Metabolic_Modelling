@@ -1,0 +1,63 @@
+#
+##
+### Top level module to analyse the ETC in isolation
+##
+#
+
+Structural()
+
+Include(ETC.spy)
+
+##External("WATER")
+
+"NITRATE-REDUCTASE-CYTOCHROME-RXN":
+	1 "NITRATE" + 2 "Cytochromes-C-Reduced" + 2 "PROTON" ->
+	2 "Cytochromes-C-Oxidized" + 1 "WATER" + 1 "NITRITE"
+	~
+	
+        #PHYSIOL-LEFT-TO-RIGHT
+    # EC-1.9.6.1 ; IRREV MetaCyc 22.6
+
+"1.7.2.2-RXN": 
+	1 "NITRITE" + 6 "Cytochromes-C-Reduced" + 8 "PROTON"
+	-> 6 "Cytochromes-C-Oxidized" + 2 "WATER" + 1 "AMMONIUM"
+	~
+    # EC-1.7.2.2, High Gibbs Free E. Irrev LR makes PO ratio much closer to literature data.
+
+##"RXN-11811": # Spontaneous
+##    "AMMONIA" + "PROTON" <> "AMMONIUM"
+##    ~
+
+ATPase:
+    "ATP" + "WATER" -> "ADP" + "Pi" + "PROTON" + x_AWork
+    ~
+
+NADH_tx:
+    x_NADH -> "NADH"
+    ~ 
+
+NAD_tx:
+    x_NAD <- "NAD"
+    ~
+
+
+WATER_tx:
+    x_WATER <- "WATER"
+    ~
+    
+O2_tx:
+    x_O2 <> "OXYGEN-MOLECULE"
+    ~
+    
+NO2_tx:
+    x_NITRITE <> "NITRITE"
+    ~
+
+NO3_tx:
+    x_NITRATE <> "NITRATE"
+    ~
+
+NH4_tx: 
+    x_NH4 <> "AMMONIUM"
+    ~
+
